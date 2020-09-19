@@ -1,0 +1,67 @@
+name: Publish
+
+on:
+  release:
+    types: [published, created, released, prereleased]
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: 'Github release tag'
+      dist-tag:
+        description: 'Registry tag'
+
+jobs:
+  publish-npm-scoped:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.release-tag }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.release-tag }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - run: jq '.name = "vitale"' package.json > package-unscoped.json
+      - run: jq '.name = "vitale"' package-lock.json > package-lock-unscoped.json
+      - run: rm -rf package.json package-lock.json
+      - run: mv package-unscoped.json package.json
+      - run: mv package-lock-unscoped.json package-lock.json
+      - run: npm ci
+      - run: npm run build
+      - run: git add package-lock.json package.json
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
+
+  publish-gh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.release-tag }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com/
+          scope: '@thibremy'
+      - run: npm ci
+      - run: npm run build
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,36 @@
+name: Release
+
+on: 
+  workflow_dispatch:
+    inputs:
+      draft:
+        description: 'Draft'     
+        required: true
+        default: 'true'
+      prerelease:
+        required: true
+        description: 'Prerelease'
+        default: 'true'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env: 
+      RELEASE_DRAFT: ${{ contains(github.event.inputs.draft, 'true') }}
+      RELEASE_PRELEASE: ${{ contains(github.event.inputs.prerelease, 'true') }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Extract version from package
+        run: echo "::set-env name=VERSION_PCKG::$(jq -r ".version" package.json)"
+      - name: Create Release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.VERSION_PCKG }}
+          release_name: ${{ env.VERSION_PCKG }}
+          draft: ${{ env.RELEASE_DRAFT }}
+          prerelease: ${{ env.RELEASE_PRELEASE }}

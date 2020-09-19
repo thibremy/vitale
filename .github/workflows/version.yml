@@ -1,0 +1,42 @@
+name: Version
+
+on: 
+  workflow_dispatch:
+    inputs:
+      version-level:
+        description: 'Version bump level major | minor | patch | premajor | preminor | prepatch | prerelease'     
+        required: true
+        default: 'prerelease'
+      version-preid:
+        required: true
+        description: 'Version preid'
+        default: 'rc'
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    env: 
+      VERSION_LEVEL: ${{ github.event.inputs.version-level }}
+      VERSION_PREID: ${{ github.event.inputs.version-preid }}
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          git config --local user.email "$(git log --format='%ae' HEAD^!)"
+          git config --local user.name "$(git log --format='%an' HEAD^!)"
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci
+      - name: Bump version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}
+        run: |
+          npm version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}
+          echo "::set-env name=VERSION_PCKG::$(jq -r ".version" package.json)"
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: "chore(version): ${{ env.VERSION_LEVEL }}" 
+          title: "chore(version): ${{ env.VERSION_PCKG }}" 
+          delete-branch: true
+          branch: version/${{ env.VERSION_PCKG }}
+          body: |
+            Usage of `npm version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}`
+            Version bump to `${{ env.VERSION_PCKG }}`
