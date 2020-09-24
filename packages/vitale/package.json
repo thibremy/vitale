@@ -1,6 +1,6 @@
 {
   "name": "@thibremy/vitale",
-  "version": "0.0.1-rc.0",
+  "version": "0.0.1-rc.1",
   "description": "Vitale CLI",
   "bin": {
     "vitale": "./dist/index.js"
@@ -13,7 +13,6 @@
     "test:watch": "jest --watch",
     "prepublishOnly": "npm run build"
   },
-  "dependencies": {},
   "devDependencies": {
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-typescript": "^7.10.4",
