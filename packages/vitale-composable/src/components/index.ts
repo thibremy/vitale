@@ -1,0 +1,5 @@
+export { default as BodyEdge } from './BodyEdge.vue'
+export { default as DocumentEdge } from './DocumentEdge.vue'
+export { default as HeadEdge } from './HeadEdge.vue'
+export { default as LinkEdge } from './LinkEdge.vue'
+export { default as PageEdge } from './PageEdge.vue'
