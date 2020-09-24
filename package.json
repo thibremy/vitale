@@ -1,6 +1,5 @@
 {
   "private": true,
-  "version": "0.0.1-rc.0",
   "devDependencies": {
     "lerna": "^3.22.1",
     "prettier": "^2.0.5",

@@ -1,14 +1,12 @@
-name: Publish
+name: Publish to registry
 
 on:
-  release:
-    types: [published, created, released, prereleased]
   workflow_dispatch:
     inputs:
       release-tag:
-        description: 'Github release tag'
+        description: 'Github tag'
       dist-tag:
-        description: 'Registry tag'
+        description: 'Registry dist-tag'
 
 jobs:
   publish:
@@ -22,7 +20,9 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm ci
+      - run: npx lerna bootstrap
       - env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-        run: npx lerna publish --canary
+          dist-tag: ${{ github.event.inputs.release-tag }}
+        run: npx lerna exec "npm publish"
         

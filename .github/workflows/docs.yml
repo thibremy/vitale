@@ -1,4 +1,4 @@
-name: Documentations
+name: Upload docs
 
 on:
   release:
@@ -17,10 +17,10 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npx vitepress build docs
-        timeout-minutes: 2
+        timeout-minutes: 1
         continue-on-error: true
       - run: echo "::set-env name=VERSION_PCKG::$(jq -r ".version" lerna.json)"
-      - name: Upload documentation
+      - name: Upload docs
         uses: actions/upload-artifact@v2
         with:
           name: dist-docs

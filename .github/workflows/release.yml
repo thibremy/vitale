@@ -1,4 +1,4 @@
-name: Release
+name: Create release 
 
 on: 
   workflow_dispatch:
@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: 14
       - name: Extract version from package
-        run: echo "::set-env name=VERSION_PCKG::$(jq -r ".version" package.json)"
+        run: echo "::set-env name=VERSION_PCKG::$(jq -r ".version" lerna.json)"
       - name: Create Release
         uses: actions/create-release@v1
         env:
