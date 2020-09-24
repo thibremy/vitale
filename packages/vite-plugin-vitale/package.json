@@ -1,6 +1,6 @@
 {
   "name": "@thibremy/vite-plugin-vitale",
-  "version": "0.0.1-rc.0",
+  "version": "0.0.1-rc.1",
   "description": "Vite plugin for vitale integration",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,10 +19,9 @@
     "vite": "^1.0.0-rc.4",
     "vue-router": "^4.0.0-beta.4"
   },
- 
   "dependencies": {
-    "@thibremy/vitale-worker": "0.0.1-rc.0",
-    "@thibremy/vitale-composable": "0.0.1-rc.0"
+    "@thibremy/vitale-composable": "^0.0.1-rc.1",
+    "@thibremy/vitale-worker": "^0.0.1-rc.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.11.0",
