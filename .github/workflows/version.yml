@@ -28,15 +28,14 @@ jobs:
       - run: npm ci
       - name: Bump version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}
         run: |
-          npm version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}
-          echo "::set-env name=VERSION_PCKG::$(jq -r ".version" package.json)"
+          npx lerna version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }} --no-push --yes
+          echo "::set-env name=VERSION_PCKG::$(jq -r ".version" lerna.json)"
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3
         with:
-          commit-message: "chore(version): ${{ env.VERSION_LEVEL }}" 
-          title: "chore(version): ${{ env.VERSION_PCKG }}" 
+          commit-message: "chore(version): v${{ env.VERSION_PCKG }}" 
+          title: "chore(version): v${{ env.VERSION_PCKG }}" 
           delete-branch: true
-          branch: version/${{ env.VERSION_PCKG }}
+          branch: next/v${{ env.VERSION_PCKG }}
           body: |
-            Usage of `npm version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}`
-            Version bump to `${{ env.VERSION_PCKG }}`
+            Usage of `lerna version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}`

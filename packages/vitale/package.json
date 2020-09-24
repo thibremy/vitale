@@ -1,0 +1,26 @@
+{
+  "name": "@thibremy/vitale",
+  "version": "0.0.1-rc.0",
+  "description": "Vitale CLI",
+  "bin": {
+    "vitale": "./dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsup src/index.ts --watch",
+    "build": "tsup src/index.ts --dts",
+    "lint": "prettier --write --parser typescript \"src/**/*.ts\"",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.0",
+    "jest": "^26.4.1",
+    "tsup": "^3.6.1",
+    "vite": "^1.0.0-rc.4"
+  }
+}

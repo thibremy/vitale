@@ -1,0 +1,28 @@
+name: Documentations
+
+on:
+  release:
+    types: [published, created, released, prereleased]
+  workflow_dispatch:
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.release-tag }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://registry.npmjs.org/
+      - run: npx vitepress build docs
+        timeout-minutes: 2
+        continue-on-error: true
+      - run: echo "::set-env name=VERSION_PCKG::$(jq -r ".version" lerna.json)"
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist-docs
+          path: |
+            docs/.vitepress/dist
