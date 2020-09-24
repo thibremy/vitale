@@ -1,17 +1,12 @@
-name: Publish
+name: Documentations
 
 on:
   release:
     types: [published, created, released, prereleased]
   workflow_dispatch:
-    inputs:
-      release-tag:
-        description: 'Github release tag'
-      dist-tag:
-        description: 'Registry tag'
 
 jobs:
-  publish:
+  upload:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,8 +16,10 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-        run: npx lerna publish --canary --preid next.$(git rev-parse --short HEAD)
-        
+      - run: npx vitepress build docs
+      - name: Upload documentation
+        uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: |
+            docs/.vitepress/dist

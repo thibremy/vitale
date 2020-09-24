@@ -16,18 +16,21 @@ jobs:
         with:
           node-version: 14
       - run: npm ci
-      - run: npm run build --if-present -- --report --report-json
-      - run: npm run test:unit -- --coverage
-      - name: Upload report
+      - run: npx lerna bootstrap
+      - run: npx lerna run build
+      - run: npx lerna run test:unit -- --coverage
+      - name: Upload reports
         uses: actions/upload-artifact@v2
         with:
           name: report
           path: |
-            dist/*-report.html
-            dist/*-report.json
-      - name: Upload coverage
+            packages/**/dist/*-report.html
+            packages/**/dist/*-report.json
+      - name: Upload coverages
         uses: actions/upload-artifact@v2
         with:
-          name: coverage
-          path: coverage
+          name: coverages
+          path: |
+            packages/**/dist/*-report.html
+            packages/**/dist/*-report.json
   

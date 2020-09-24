@@ -1,0 +1,13 @@
+{
+  "version": "0.0.1-rc.0",
+  "npmClient": "npm",
+  "packages": [
+    "packages/**",
+    "playground/*"
+  ],
+  "command": {
+    "version": {
+      "message": "chore(version): %s"
+    }
+  }
+}

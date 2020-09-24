@@ -1,0 +1,25 @@
+{
+  "name": "@thibremy/vitale-composable",
+  "version": "0.0.1-rc.0",
+  "description": "Vitale composable library",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "vite": "^1.0.0-rc.4"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-typescript": "^7.10.4",
+    "@types/jest": "^26.0.10",
+    "@types/node": "^14.6.0",
+    "jest": "^26.4.1",
+    "tsup": "^3.6.1",
+    "vite": "^1.0.0-rc.4"
+  }
+}
