@@ -1,32 +1,22 @@
-import * as Api from './api'
-import * as Page from './page'
-import * as Origin from './origin'
+// import * as Asset from './asset/cloudflare-asset'
+// import * as GraphQL from './graphql'
+// import * as Router from './router'
 
-if (addEventListener) {
-  addEventListener('fetch', (event: any) => {
-    event.respondWith(handleEvent(event))
-  })
-}
+addEventListener('fetch', (event: any) => {
+  event.respondWith(handleEvent(event))
+})
 
-export type VitaleWorkerEvent = {
-  request: Request
-}
-
-export async function handleEvent(event: any) {
-  const request: Request = event.request
-
-  if (Api.match(request)) {
-    return Api.handleRequest(request)
+async function handleEvent(event: any) {
+ 
+  let u = new URL(event.request.url);
+  switch (u.pathname) {
+    case "/":
+      return await fetch("https://storage.googleapis.com/cfgraphql/index.html");
+    case "/graphiql/cfgql.css":
+      return await fetch("https://storage.googleapis.com/cfgraphql/cfgql.css");
+    case "/graphiql/cfgql.js":
+      return await fetch("https://storage.googleapis.com/cfgraphql/cfgql.js");
+    default:
+      return new Response(JSON.stringify("OK"));
   }
-
-  if (Page.match(request)) {
-    return Page.handleRequest(request)
-  }
-  
-  if (Origin.match(request)) {
-    return Origin.handleRequest(request)
-  }
-
-  return new Response(null, { status: 404 })
 }
-

@@ -1,8 +1,11 @@
-export const match = (request: Request): boolean => {
+import * as GraphQL from './graphql'
+
+export const match = (event: any): boolean => {
+  const request: Request = event.request
   const url = new URL(request.url)
-  return true
+  return false
 }
 
-export function handleRequest(request: Request) {
-  return new Response(JSON.stringify({ api: true }), { status: 200 })
+export function handleRequest(event: any) {
+  GraphQL.handleEvent(event)
 }

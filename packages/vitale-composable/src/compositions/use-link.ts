@@ -1,12 +1,7 @@
 export const useLink = () => {
-  const preload = () => {
+  const preload = () => {}
 
-  }
-
-  const prefetch = () => {
-
-  }
-
+  const prefetch = () => {}
 
   return {
     preload,

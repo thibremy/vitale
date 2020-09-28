@@ -1,5 +1,8 @@
 {
   "private": true,
+  "scripts": {
+    "build": "lerna run build"
+  },
   "devDependencies": {
     "lerna": "^3.22.1",
     "prettier": "^2.0.5",

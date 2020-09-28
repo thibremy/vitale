@@ -1,32 +1,22 @@
-export type PageInit = {
-  
-}
+export type PageInit = {}
 
-export type PageInfo = {
-
-}
+export type PageInfo = {}
 
 export type Page = {
-  info: PageInfo,
-
+  info: PageInfo
 }
 
 export type UsePageInit = Function | PageInit
 
 export const from = (init?: UsePageInit): PageInit => {
-  return {
-
-  }
+  return {}
 }
 
 export const usePage = (init?: UsePageInit) => {
   const pageInit = from(init)
 
   if (pageInit) {
-
   }
 
-  return {
-
-  }
+  return {}
 }
