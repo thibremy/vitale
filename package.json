@@ -1,11 +1,14 @@
 {
   "private": true,
   "scripts": {
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "docs": "vitepress --root docs",
+    "docs:build": "vitepress build --root docs"
   },
   "devDependencies": {
     "lerna": "^3.22.1",
     "prettier": "^2.0.5",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "vitepress": "^0.6.0"
   }
 }

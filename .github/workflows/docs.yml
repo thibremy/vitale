@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org/
-      - run: npx vitepress build docs
+      - run: npx vitepress build --root docs
         timeout-minutes: 1
         continue-on-error: true
       - run: echo "::set-env name=VERSION_PCKG::$(jq -r ".version" lerna.json)"
