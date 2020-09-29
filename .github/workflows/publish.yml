@@ -3,14 +3,21 @@ name: Publish to registry
 on:
   workflow_dispatch:
     inputs:
+      registry:
+        description: 'registry'
+        default: 'npm,github'
       release-tag:
         description: 'Github tag'
       dist-tag:
         description: 'Registry dist-tag'
+        default: 'latest'
 
 jobs:
-  publish:
+  publish-npm:
     runs-on: ubuntu-latest
+    if: contains(github.event.inputs.registry, 'npm')
+    env: 
+      NODE_ENV: 'production'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,8 +28,31 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npx lerna bootstrap
+      - run: npx lerna run build
       - env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
-          dist-tag: ${{ github.event.inputs.release-tag }}
+          dist-tag: ${{ github.event.inputs.dist-tag }}
+        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}"
+
+  publish-github:
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.registry, 'github')
+    env: 
+      NODE_ENV: 'production'
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.release-tag }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com
+          scope: thibremy
+      - run: npm ci
+      - run: npx lerna bootstrap
+      - run: npx lerna run build
+      - env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          dist-tag: ${{ github.event.inputs.dist-tag }}
         run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}"
         
