@@ -1,6 +1,6 @@
 {
   "name": "@thibremy/vitale-worker",
-  "version": "0.0.1-rc.3",
+  "version": "0.0.1-rc.4",
   "description": "Vitale webworker",
   "main": "dist/index.js",
   "scripts": {
