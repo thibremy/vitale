@@ -1,6 +1,6 @@
 {
   "name": "@thibremy/vite-plugin-vitale",
-  "version": "0.0.1-rc.1",
+  "version": "0.0.1-rc.2",
   "description": "Vite plugin for vitale integration",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,8 +20,8 @@
     "vue-router": "^4.0.0-beta.4"
   },
   "dependencies": {
-    "@thibremy/vitale-composable": "^0.0.1-rc.1",
-    "@thibremy/vitale-worker": "^0.0.1-rc.1",
+    "@thibremy/vitale-composable": "^0.0.1-rc.2",
+    "@thibremy/vitale-worker": "^0.0.1-rc.2",
     "vite-plugin-voie": "^0.4.0",
     "voie-pages": "^0.4.0"
   },
@@ -31,8 +31,8 @@
     "@types/jest": "^26.0.10",
     "@types/node": "^14.6.0",
     "jest": "^26.4.1",
+    "prettier": "^2.0.5",
     "tsup": "^3.6.1",
-    "vite": "^1.0.0-rc.4",
-    "prettier": "^2.0.5"
+    "vite": "^1.0.0-rc.4"
   }
 }
