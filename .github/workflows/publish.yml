@@ -25,7 +25,7 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-          registry-url: https://registry.npmjs.org/
+          registry-url: https://registry.npmjs.org
       - run: npm ci
       - run: npx lerna bootstrap
       - run: npx lerna run build
@@ -46,11 +46,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-          registry-url: https://npm.pkg.github.com
-          scope: thibremy
       - run: npm ci
       - run: npx lerna bootstrap
       - run: npx lerna run build
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+          registry-url: https://npm.pkg.github.com
+        scope: thibremy
       - env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
