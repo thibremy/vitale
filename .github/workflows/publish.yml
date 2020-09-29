@@ -24,5 +24,5 @@ jobs:
       - env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
           dist-tag: ${{ github.event.inputs.release-tag }}
-        run: npx lerna exec "npm publish"
+        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}"
         
