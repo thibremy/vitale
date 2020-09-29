@@ -16,8 +16,6 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     if: contains(github.event.inputs.registry, 'npm')
-    env: 
-      NODE_ENV: 'production'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -25,20 +23,20 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-          registry-url: https://registry.npmjs.org
+          registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npx lerna bootstrap
-      - run: npx lerna run build
+      - env: 
+          NODE_ENV: production
+        run: npx lerna run build
       - env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
-        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}"
+        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
 
   publish-github:
     runs-on: ubuntu-latest
     if: contains(github.event.inputs.registry, 'github')
-    env: 
-      NODE_ENV: 'production'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -48,14 +46,16 @@ jobs:
           node-version: 14
       - run: npm ci
       - run: npx lerna bootstrap
-      - run: npx lerna run build
+      - env: 
+          NODE_ENV: production
+        run: npx lerna run build
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://npm.pkg.github.com/
           scope: thibremy
       - env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
-        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}"
+        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
         
