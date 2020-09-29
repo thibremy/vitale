@@ -25,14 +25,12 @@ jobs:
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - run: npm ci
-      - run: npx lerna bootstrap
-      - env: 
-          NODE_ENV: production
-        run: npx lerna run build
+      - run: npm run bootstrap
       - env:
+          NODE_ENV: production
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
-        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
+        run: ./node_modules/.bin/lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
 
   publish-github:
     runs-on: ubuntu-latest
@@ -45,17 +43,15 @@ jobs:
         with:
           node-version: 14
       - run: npm ci
-      - run: npx lerna bootstrap
-      - env: 
-          NODE_ENV: production
-        run: npx lerna run build
+      - run: npm run bootstrap
       - uses: actions/setup-node@v1
         with:
           node-version: 14
           registry-url: https://npm.pkg.github.com/
           scope: thibremy
       - env:
+          NODE_ENV: production
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
-        run: npx lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
+        run: ./node_modules/.bin/lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
         

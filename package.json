@@ -1,9 +1,11 @@
 {
   "private": true,
   "scripts": {
+    "bootstrap": "lerna bootstrap",
     "build": "lerna run build",
     "docs": "vitepress --root docs",
-    "docs:build": "vitepress build --root docs"
+    "docs:build": "vitepress build --root docs",
+    "test:unit": "lerna run test:unit -- --coverage"
   },
   "devDependencies": {
     "lerna": "^3.22.1",

@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - name: Bump version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}
         run: |
-          npx lerna version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }} --no-push --yes
+          ./node_modules/.bin/lerna version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }} --no-push --yes
           echo "::set-env name=VERSION_PCKG::$(jq -r ".version" lerna.json)"
       - name: Create pull request
         uses: peter-evans/create-pull-request@v3

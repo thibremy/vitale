@@ -16,9 +16,9 @@ jobs:
         with:
           node-version: 14
       - run: npm ci
-      - run: npx lerna bootstrap
-      - run: npx lerna run build
-      - run: npx lerna run test:unit -- --coverage
+      - run: npm run bootstrap
+      - run: npm run build
+      - run: npm run test:unit -- --coverage
       - name: Upload reports
         uses: actions/upload-artifact@v2
         with:
