@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "basic",
-  "version": "0.0.1-rc.1",
+  "version": "0.0.1-rc.2",
   "main": "dist/_assets/worker.js",
   "scripts": {
     "dev": "vite",
@@ -10,15 +10,15 @@
     "serve": "vite serve"
   },
   "dependencies": {
+    "@thibremy/vitale-pages": "^0.0.1-rc.2",
     "vue": "^3.0.0-rc.5",
-    "vue-router": "^4.0.0-beta.12",
-    "@thibremy/vitale-pages": "^0.0.1"
+    "vue-router": "^4.0.0-beta.12"
   },
   "devDependencies": {
-    "@thibremy/vite-plugin-vitale": "^0.0.1-rc.1",
+    "@thibremy/vite-plugin-vitale": "^0.0.1-rc.2",
     "@vue/compiler-sfc": "^3.0.0-rc.5",
-    "vite": "^1.0.0-rc.4",
     "prettier": "^2.0.5",
-    "typescript": "^4.0.2"
+    "typescript": "^4.0.2",
+    "vite": "^1.0.0-rc.4"
   }
 }
