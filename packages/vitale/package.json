@@ -1,6 +1,6 @@
 {
   "name": "@thibremy/vitale",
-  "version": "0.0.1-rc.3",
+  "version": "0.0.1-rc.4",
   "description": "Vitale CLI",
   "bin": {
     "vitale": "./dist/index.js"
