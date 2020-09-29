@@ -36,6 +36,6 @@ jobs:
           commit-message: "chore(version): v${{ env.VERSION_PCKG }}" 
           title: "chore(version): v${{ env.VERSION_PCKG }}" 
           delete-branch: true
-          branch: next/v${{ env.VERSION_PCKG }}
+          branch: version/v${{ env.VERSION_PCKG }}
           body: |
             Usage of `lerna version ${{ env.VERSION_LEVEL }} --preid ${{ env.VERSION_PREID }}`
