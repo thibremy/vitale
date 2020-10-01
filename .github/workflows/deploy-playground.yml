@@ -1,0 +1,28 @@
+name: Deploy playground
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment: 
+        description: 'Environment <canary|rc|production>'
+        required: true
+        default: 'canary'
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    if: contains(github.event.inputs.environment, 'canary')
+    steps:
+      - uses: actions/checkout@master
+      - run: npm ci
+      - run: npm run bootstrap
+      - run: npm run build
+      - working-directory: playground/basic
+        run: mv wrangler.example.toml wrangler.toml 
+      - name: Publish playground/basic
+        uses: cloudflare/wrangler-action@1.2.0
+        env:
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        with:
+          workingDirectory: playground/basic
+          apiToken: ${{ secrets.CF_DEPLOY_API_TOKEN }}
+          environment: ${{ github.event.inputs.environment }}

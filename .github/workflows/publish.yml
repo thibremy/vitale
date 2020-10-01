@@ -23,14 +23,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-          registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run bootstrap
+      - run: npx hygen npmrc npm --authToken ${{ secrets.NPM_PUBLISH_TOKEN }}
       - env:
           NODE_ENV: production
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISH_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
-        run: ./node_modules/.bin/lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
+        run: ./node_modules/.bin/lerna publish from-package --yes --no-verify-access
 
   publish-github:
     runs-on: ubuntu-latest
@@ -44,14 +44,9 @@ jobs:
           node-version: 14
       - run: npm ci
       - run: npm run bootstrap
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-          registry-url: https://npm.pkg.github.com/
-          scope: thibremy
+      - run: npx hygen npmrc github --authToken ${{ secrets.GITHUB_TOKEN }}
       - env:
           NODE_ENV: production
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           dist-tag: ${{ github.event.inputs.dist-tag }}
-        run: ./node_modules/.bin/lerna exec "npm publish --tag ${{ env.dist-tag }}" --no-bail
+        run: ./node_modules/.bin/lerna publish from-package --yes --no-verify-access
         

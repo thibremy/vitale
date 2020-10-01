@@ -28,5 +28,10 @@
     "@cloudflare/kv-asset-handler": "0.0.12",
     "dataloader": "^2.0.0",
     "graphql": "^15.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thibremy/vitale",
+    "directory": "packages/vitale-worker"
   }
 }

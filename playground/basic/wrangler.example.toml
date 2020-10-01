@@ -1,4 +1,4 @@
-name = "vitale-playground-basic"
+name = "vitale-playground-basic-dev"
 type = "javascript"
 zone_id = ""
 account_id = ""
@@ -8,3 +8,12 @@ workers_dev = true
 [site]
 bucket = "./dist"
 entry-point = "./dist/_assets/dist-worker"
+
+[env.canary]
+name = "vitale-playground-canary"
+
+[env.production]
+name = "vitale-playground-basic"
+
+[env.rc]
+name = "vitale-playground-basic-rc"
