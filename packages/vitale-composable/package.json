@@ -1,6 +1,6 @@
 {
   "name": "@thibremy/vitale-composable",
-  "version": "0.0.1-rc.5",
+  "version": "0.0.1-rc.6",
   "description": "Vitale composable library",
   "scripts": {
     "dev": "vite",
